@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Estudio profesional en línea para diseñar cuadros personalizados en 3D. Integra fotos, tipografías premium, logos y códigos de Spotify. Exporta en PNG y PDF de alta calidad.">
+  <meta name="keywords" content="cuadro 3d, personalización, diseño, spotify code, editor de fotos, tipografía, diseño gráfico, regalo personalizado">
+  <meta name="author" content="Cuadro 3D Creator Studio">
+  <meta name="theme-color" content="#0A0A0F">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="color-scheme" content="dark">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cuadro 3D Creator · Studio Profesional">
+  <meta property="og:description" content="Diseña cuadros personalizados en 3D con fotos, tipografías premium y códigos de Spotify.">
+  <meta property="og:locale" content="es_ES">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cuadro 3D Creator · Studio Profesional">
+  <meta name="twitter:description" content="Diseña cuadros personalizados en 3D con fotos, tipografías premium y códigos de Spotify.">
+
+  <title>Cuadro 3D Creator · Studio Profesional</title>
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23F2D06B'/%3E%3Cstop offset='1' stop-color='%23D4AF37'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='5' fill='url(%23g)'/%3E%3Cpath d='M7 7h10v10H7z' fill='%230A0A0F'/%3E%3C/svg%3E">
+
+  <!-- 🚀 Google Fonts: Preconnect + Tipografías Premium -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.intercomcdn.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@700&family=Dancing+Script:wght@700&family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/editor.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- JSON-LD para SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Cuadro 3D Creator Studio",
+    "description": "Estudio profesional para diseñar cuadros personalizados en 3D con tipografías premium, fotos y códigos de Spotify.",
+    "applicationCategory": "DesignApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Diseño 3D en tiempo real",
+      "Múltiples tipografías premium",
+      "Carga de tipografías personalizadas",
+      "Integración de fotos",
+      "Códigos de Spotify",
+      "Exportación PNG y PDF"
+    ]
+  }
+  </script>
+
+  <style>
+    /* Estilos específicos para el Toggle de Spotify (para asegurar que funcione sin editar CSS externo) */
+    .spotify-header {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 12px;
+    }
+    .spotify-section-wrapper {
+      transition: opacity 0.3s ease, transform 0.3s ease, display 0.3s allow-discrete;
+      opacity: 1;
+      transform: translateY(0);
+      overflow: hidden;
+    }
+    .spotify-section-wrapper.is-hidden {
+      display: none;
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    #toggleSpotifyBtn {
+      min-height: 32px;
+      padding: 4px 12px;
+      font-size: 0.8em;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    /* Estado inactivo del botón */
+    #toggleSpotifyBtn:not(.on) {
+      background: var(--bg-tertiary, #1A1A1D);
+      color: var(--text-muted, #71717A);
+      border-color: var(--border-subtle, rgba(255,255,255,0.06));
+      box-shadow: none;
+    }
+    #toggleSpotifyBtn:not(.on):hover {
+      color: var(--text-secondary, #A1A1AA);
+      border-color: var(--border-medium, rgba(255,255,255,0.1));
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Región viva para lectores de pantalla (Notificaciones) -->
+  <div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ============ TOPBAR ============ -->
+  <header class="topbar" role="banner">
+    <div class="brand">
+      <svg class="brand-icon" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M7 14l3-4 3 3 4-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-name">Cuadro 3D Creator</span>
+      <span class="tag">Studio Pro</span>
+    </div>
+
+    <nav class="topbar-actions" aria-label="Acciones globales">
+      <button type="button" class="icon-btn" id="undoBtn" title="Deshacer (Ctrl+Z)" aria-label="Deshacer" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+      </button>
+      <button type="button" class="icon-btn" id="redoBtn" title="Rehacer (Ctrl+Y)" aria-label="Rehacer" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
+      </button>
+      <button type="button" class="icon-btn" id="helpBtn" title="Ayuda (F1)" aria-label="Abrir ayuda">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7"/><circle cx="12" cy="17" r="0.6" fill="currentColor"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ============ CONTENIDO PRINCIPAL ============ -->
+  <main id="main-content" class="layout">
+
+    <!-- STAGE / CANVAS -->
+    <section class="stage" aria-label="Área de diseño y vista previa">
+      <canvas id="cv" width="1485" height="1050" role="img" aria-label="Vista previa en tiempo real del cuadro 3D personalizado" tabindex="0">
+        Tu navegador no soporta la etiqueta canvas.
+      </canvas>
+      <div class="stage-hint" aria-hidden="true">
+        <kbd>Arrastra</kbd> para mover · <kbd>Rueda</kbd> para zoom · <kbd>Flechas</kbd> para ajuste fino
+      </div>
+    </section>
+
+    <!-- PANEL DE CONTROL -->
+    <aside class="panel" aria-label="Panel de personalización">
+      <form id="editorForm" class="panel-form" autocomplete="off" novalidate>
+
+        <!-- SECCIÓN: Textos -->
+        <div class="section">
+          <h3 class="section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5h16v2"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>
+            <span>Textos</span>
+          </h3>
+          <div class="field-group">
+            <label class="field" for="name">
+              <span class="field-label">Nombre principal</span>
+              <input type="text" id="name" name="name" value="TU NOMBRE" maxlength="14" placeholder="Ej. AARON" spellcheck="false" autocomplete="off" autocapitalize="characters" required>
+              <small class="field-hint">Máx. 14 caracteres</small>
+            </label>
+
+            <label class="field" for="top">
+              <span class="field-label">Texto superior (Artista/Marca)</span>
+              <input type="text" id="top" name="top" value="ARTISTA" maxlength="12" placeholder="Ej. FEID" spellcheck="false" autocomplete="off" autocapitalize="characters">
+              <small class="field-hint">Máx. 12 caracteres</small>
+            </label>
+
+            <label class="field" for="phrase">
+              <span class="field-label">Frase o dedicatoria</span>
+              <input type="text" id="phrase" name="phrase" value="TU FRASE AQUÍ" maxlength="40" placeholder="Escribe una frase..." spellcheck="false">
+              <small class="field-hint">Máx. 40 caracteres</small>
+            </label>
+          </div>
+        </div>
+
+        <hr class="divider" aria-hidden="true">
+
+        <!-- SECCIÓN: Tipografías Premium -->
+        <div class="section">
+          <h3 class="section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+            <span>Tipografía</span>
+          </h3>
+
+          <div class="field-group">
+            <span class="field-label" id="fontGridLabel">Familia tipográfica</span>
+
+            <div class="font-grid" id="fontGrid" role="radiogroup" aria-labelledby="fontGridLabel">
+              <!-- Fuentes predeterminadas -->
+              <button type="button" class="font-chip active" data-font="'Montserrat', sans-serif" data-name="Montserrat" style="font-family: 'Montserrat', sans-serif;" aria-pressed="true" title="Moderna y limpia">
+                <span class="font-preview">Aa</span>
+                <span class="font-name">Montserrat</span>
+              </button>
+              <button type="button" class="font-chip" data-font="'Playfair Display', serif" data-name="Playfair" style="font-family: 'Playfair Display', serif;" aria-pressed="false" title="Elegante y clásica">
+                <span class="font-preview">Aa</span>
+                <span class="font-name">Playfair</span>
+              </button>
+              <button type="button" class="font-chip" data-font="'Bebas Neue', sans-serif" data-name="Bebas" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px;" aria-pressed="false" title="Impactante y alta">
+                <span class="font-preview">Aa</span>
+                <span class="font-name">Bebas</span>
+              </button>
+              <button type="button" class="font-chip" data-font="'Dancing Script', cursive" data-name="Dancing" style="font-family: 'Dancing Script', cursive;" aria-pressed="false" title="Manuscrita y romántica">
+                <span class="font-preview">Aa</span>
+                <span class="font-name">Dancing</span>
+              </button>
+              <button type="button" class="font-chip" data-font="'Cinzel', serif" data-name="Cinzel" style="font-family: 'Cinzel', serif;" aria-pressed="false" title="Estilo romano premium">
+                <span class="font-preview">Aa</span>
+                <span class="font-name">Cinzel</span>
+              </button>
+              <button type="button" class="font-chip" data-font="'Poppins', sans-serif" data-name="Poppins" style="font-family: 'Poppins', sans-serif;" aria-pressed="false" title="Geométrica y amigable">
+                <span class="font-preview">Aa</span>
+                <span class="font-name">Poppins</span>
+              </button>
+            </div>
+
+            <!-- Botón para agregar tipografía personalizada -->
+            <div class="font-custom-row">
+              <button type="button" class="btn alt font-add-btn" id="addFontBtn" title="Subir tipografía personalizada (.ttf, .otf, .woff)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 5v14"/><path d="M5 12h14"/>
+                </svg>
+                Agregar mi tipografía
+              </button>
+              <input type="file" id="fFont" accept=".ttf,.otf,.woff,.woff2" hidden>
+              <small class="field-hint">Formatos: TTF, OTF, WOFF, WOFF2 (máx. 2MB)</small>
+            </div>
+
+            <!-- Lista de fuentes custom (aparece si hay alguna) -->
+            <div id="customFontsList" class="custom-fonts-list" hidden>
+              <span class="field-label" style="margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 7h-3V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                </svg>
+                Mis tipografías
+              </span>
+              <div id="customFontsItems" class="custom-fonts-items"></div>
+            </div>
+
+            <!-- Control de tamaño -->
+            <label class="field" for="fontSize">
+              <span class="field-label">
+                Tamaño de fuente
+                <output id="fontSizeOut" class="zoom-out" for="fontSize">48px</output>
+              </span>
+              <input type="range" id="fontSize" name="fontSize" min="16" max="150" step="2" value="48">
+            </label>
+          </div>
+
+          <input type="hidden" id="selectedFont" name="fontFamily" value="'Montserrat', sans-serif">
+        </div>
+
+        <hr class="divider" aria-hidden="true">
+
+        <!-- SECCIÓN: Color -->
+        <div class="section">
+          <h3 class="section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>
+            <span>Color del Marco</span>
+          </h3>
+          <div class="row" id="colors" role="radiogroup" aria-label="Paleta de colores disponibles">
+            <!-- Se llena dinámicamente con JS -->
+          </div>
+        </div>
+
+        <hr class="divider" aria-hidden="true">
+
+        <!-- SECCIÓN: Imágenes -->
+        <div class="section">
+          <h3 class="section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Imágenes y Recursos</span>
+          </h3>
+
+          <div class="field-group">
+            <div class="drop-zone" id="dropZoneMulti" tabindex="0" role="button" aria-label="Arrastra fotos aquí o haz clic para subir">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <span>Arrastra fotos aquí o <span class="link-text">busca en tu dispositivo</span></span>
+              <small class="field-hint">JPG, PNG, WEBP (Máx. 5MB c/u)</small>
+            </div>
+
+            <input type="file" id="fMulti" accept="image/png, image/jpeg, image/webp" multiple hidden>
+
+            <label class="btn alt" for="fName">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5h16v2"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>
+              Foto dentro de las letras
+            </label>
+            <input type="file" id="fName" accept="image/png, image/jpeg, image/webp" hidden>
+
+            <!-- ========================================== -->
+            <!-- 🆕 SECCIÓN SPOTIFY CON TOGGLE INTEGRADO    -->
+            <!-- ========================================== -->
+            <div class="section" style="padding: 0; border: none; margin-top: 16px;">
+              <div class="spotify-header">
+                <h3 class="section-title" style="margin: 0;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9"/><path d="M8 12a4 4 0 0 1 8 0"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/>
+                  </svg>
+                  <span>Código de Spotify</span>
+                </h3>
+                <!-- Botón Toggle -->
+                <button type="button" class="chip on" id="toggleSpotifyBtn" title="Activar o desactivar sección">
+                  <span id="spotifyToggleText">Ocultar</span>
+                </button>
+              </div>
+
+              <!-- Contenedor que se oculta/muestra -->
+              <div id="spotifySection" class="spotify-section-wrapper">
+                <label class="btn alt" for="fCode" style="width: 100%;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                  Subir imagen del código
+                </label>
+                <input type="file" id="fCode" accept="image/png, image/jpeg, image/webp" hidden>
+                <small class="field-hint" style="display: block; text-align: center; margin-top: 8px;">Formato cuadrado recomendado</small>
+              </div>
+            </div>
+            <!-- ========================================== -->
+
+          </div>
+        </div>
+
+        <hr class="divider" aria-hidden="true">
+
+        <!-- SECCIÓN: Editar foto activa -->
+        <div class="section">
+          <h3 class="section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4z"/></svg>
+            <span>Editar Foto Activa</span>
+          </h3>
+          <small class="section-desc">Selecciona una foto en el lienzo para editarla.</small>
+          <div class="row" id="chips" role="list" aria-label="Fotos cargadas en el proyecto"></div>
+        </div>
+
+        <hr class="divider" aria-hidden="true">
+
+        <!-- SECCIÓN: Transformación -->
+        <div class="section">
+          <h3 class="section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M8 11h6"/><path d="M11 8v6"/></svg>
+            <span>Transformación</span>
+          </h3>
+
+          <div class="field-group">
+            <label class="field" for="zoom">
+              <span class="field-label">
+                Zoom general
+                <output id="zoomOut" class="zoom-out" for="zoom">1.00×</output>
+              </span>
+              <input type="range" id="zoom" name="zoom" min="0.5" max="3" step="0.01" value="1">
+            </label>
+
+            <div class="row actions-row">
+              <button type="button" class="chip" id="reset" title="Centrar foto en el lienzo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg>
+                Centrar
+              </button>
+              <button type="button" class="chip danger" id="remove" title="Quitar foto seleccionada">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg>
+                Quitar
+              </button>
+            </div>
+
+            <small class="hint" style="display:block; margin-top:8px; color:var(--text-muted); font-size:0.8em;">
+              Usa <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> para ajustes finos.
+            </small>
+          </div>
+        </div>
+
+        <hr class="divider" aria-hidden="true">
+
+        <!-- SECCIÓN: Exportar -->
+        <fieldset class="section export-section" style="border:none; padding:0; margin:0;">
+          <legend class="section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+            Exportar Diseño
+          </legend>
+
+          <div class="row export-actions" style="flex-direction: column; gap: 10px;">
+            <button type="button" class="btn primary" id="dlPng">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Descargar PNG (Alta Calidad)
+            </button>
+            <button type="button" class="btn alt" id="dlPdf">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
+              Descargar PDF (Para imprenta)
+            </button>
+          </div>
+        </fieldset>
+
+      </form>
+
+      <footer class="panel-footer">
+        <small>© 2026 Cuadro 3D Creator · Hecho con <span aria-label="amor">♥</span></small>
+      </footer>
+    </aside>
+  </main>
+
+  <!-- ============ TOAST CONTAINER ============ -->
+  <div id="toast-container" class="toast-container" role="region" aria-live="polite" aria-label="Notificaciones del sistema"></div>
+
+  <!-- ============ MODAL DE AYUDA ============ -->
+  <dialog id="helpDialog" class="modal" aria-labelledby="helpTitle">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h2 id="helpTitle" class="modal-title">Centro de Ayuda</h2>
+        <button type="button" class="icon-btn close-btn" id="closeHelp" aria-label="Cerrar ayuda">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+        </button>
+      </header>
+      <div class="modal-body">
+        <h3 style="font-size:1em; margin-bottom:12px; color:var(--color-primary);">⌨️ Atajos de Teclado</h3>
+        <ul class="shortcut-list" style="list-style:none; padding:0; display:flex; flex-direction:column; gap:8px; color:var(--text-secondary); font-size:0.9em;">
+          <li><kbd>Ctrl</kbd> + <kbd>Z</kbd> : Deshacer última acción</li>
+          <li><kbd>Ctrl</kbd> + <kbd>Y</kbd> : Rehacer acción</li>
+          <li><kbd>Flechas</kbd> : Mover imagen 1px</li>
+          <li><kbd>Shift</kbd> + <kbd>Flechas</kbd> : Mover imagen 10px</li>
+          <li><kbd>+</kbd> / <kbd>-</kbd> : Zoom de imagen</li>
+          <li><kbd>F1</kbd> : Abrir esta ayuda</li>
+        </ul>
+        <h3 style="font-size:1em; margin:20px 0 12px; color:var(--color-primary);">💡 Consejos Pro</h3>
+        <p style="color:var(--text-secondary); font-size:0.9em; line-height:1.6;">
+          Para un resultado óptimo, utiliza imágenes en formato <strong>PNG con fondo transparente</strong>. 
+          Las tipografías "Dancing" y "Playfair" son ideales para dedicatorias elegantes. 
+          Puedes subir tus propias fuentes (.ttf, .otf) para un diseño único.
+        </p>
+      </div>
+      <footer class="modal-footer">
+        <button type="button" class="btn primary" id="confirmHelp">Entendido</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <!-- ============ MODAL DE CONFIRMACIÓN GENERAL ============ -->
+  <dialog id="confirmDeleteDialog" class="modal modal-danger" aria-labelledby="deleteTitle">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h2 id="deleteTitle" class="modal-title">¿Quitar esta foto?</h2>
+      </header>
+      <div class="modal-body">
+        <p>Esta acción eliminará la imagen seleccionada del lienzo. Podrás volver a subirla si lo deseas.</p>
+      </div>
+      <footer class="modal-footer">
+        <button type="button" class="btn alt" id="cancelDelete">Cancelar</button>
+        <button type="button" class="btn danger" id="confirmDelete">Sí, quitar</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <!-- ========================================== -->
+  <!-- 🆕 MODAL ESPECÍFICO PARA SPOTIFY           -->
+  <!-- ========================================== -->
+  <dialog id="spotifyConfirmDialog" class="modal">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h2 class="modal-title">¿Quitar el código de Spotify?</h2>
+      </header>
+      <div class="modal-body">
+        <p>Se eliminará la imagen actual del lienzo y se ocultará la sección. Podrás volver a activarla y subirla cuando quieras.</p>
+      </div>
+      <footer class="modal-footer">
+        <button type="button" class="btn alt" id="cancelSpotifyRemove">Cancelar</button>
+        <button type="button" class="btn danger" id="confirmSpotifyRemove">Sí, quitar y ocultar</button>
+      </footer>
+    </div>
+  </dialog>
+  <!-- ========================================== -->
+
+  <!-- Fallback sin JS -->
+  <noscript>
+    <div class="noscript-warning" style="padding:40px; text-align:center; background:var(--bg-card); color:var(--text-primary); margin:20px; border-radius:var(--radius-lg);">
+      <h2>JavaScript está desactivado</h2>
+      <p>Cuadro 3D Creator Studio requiere JavaScript para funcionar. Por favor, habilítalo en tu navegador.</p>
+    </div>
+  </noscript>
+
+  <!-- Script principal (módulo ES6) -->
+  <script type="module" src="js/app.js"></script>
+
+  </script>
+</body>
+</html>

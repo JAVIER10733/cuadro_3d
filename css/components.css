@@ -1,0 +1,69 @@
+/* === MENÚ DE TIPOGRAFÍAS PREMIUM === */
+.font-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.font-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 8px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  color: var(--text-secondary);
+  box-shadow: var(--depth-inset-soft);
+}
+
+.font-chip .font-preview {
+  font-size: 1.6em;
+  line-height: 1;
+  color: var(--text-primary);
+  transition: color 0.25s ease;
+}
+
+.font-chip .font-name {
+  font-size: 0.65em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'Inter', sans-serif; /* Siempre en Inter para legibilidad */
+}
+
+.font-chip:hover {
+  border-color: var(--color-primary);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--depth-2);
+}
+
+.font-chip.active,
+.font-chip[aria-pressed="true"] {
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 1px var(--color-primary),
+    0 4px 12px var(--color-primary-glow);
+}
+
+.font-chip.active .font-preview,
+.font-chip[aria-pressed="true"] .font-preview {
+  color: var(--color-primary-light);
+}
+
+/* Ajuste del output de tamaño de fuente */
+.zoom-out {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 0.85em;
+  font-variant-numeric: tabular-nums;
+}

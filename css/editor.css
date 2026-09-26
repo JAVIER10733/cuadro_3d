@@ -1,0 +1,470 @@
+/* =========================================================
+   🎨 EDITOR: Layout, Stage, Panel y Formularios
+   ========================================================= */
+
+
+/* =========================================================
+   📐 LAYOUT PRINCIPAL
+   ========================================================= */
+.layout {
+  display: grid;
+  gap: var(--gap);
+  padding: var(--gap);
+  max-width: 1600px;
+  margin: 0 auto;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+}
+@media (min-width: 1200px) {
+  .layout { grid-template-columns: minmax(0, 1.8fr) minmax(360px, 400px); }
+}
+
+
+/* =========================================================
+   🖼️ STAGE / CANVAS (El lienzo)
+   ========================================================= */
+.stage {
+  position: relative;
+  background-color: var(--bg-secondary);
+  background-image:
+    linear-gradient(45deg, var(--border-subtle) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--border-subtle) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--border-subtle) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--border-subtle) 75%);
+  background-size: 24px 24px;
+  background-position: 0 0, 0 12px, 12px -12px, -12px 0px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: clamp(12px, 1.5vw, 20px);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  min-width: 0;
+  transition:
+    border-color var(--dur-normal) var(--ease-smooth),
+    box-shadow var(--dur-normal) var(--ease-smooth);
+}
+.stage.is-dragging {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold), var(--shadow-lg);
+}
+
+.stage canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 75dvh;
+  background: #000;
+  border-radius: calc(var(--radius) - 4px);
+  touch-action: none;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  box-shadow: var(--shadow-sm);
+}
+
+.stage-hint {
+  margin-top: 16px;
+  font-size: 0.8em;
+  color: var(--text-muted);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.stage-status {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 10px;
+  background: rgba(9, 9, 11, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 99px;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-fast);
+}
+.stage.is-dragging .stage-status { opacity: 1; color: var(--gold-light); }
+
+@media (max-width: 600px) {
+  .stage canvas { max-height: 50dvh; }
+  .stage-hint { display: none; }
+}
+
+
+/* =========================================================
+   📋 PANEL LATERAL (Cristal esmerilado)
+   ========================================================= */
+.panel {
+  background: rgba(18, 18, 20, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 80px;
+  max-height: calc(100dvh - 100px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-medium) transparent;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.panel::-webkit-scrollbar { width: 6px; }
+.panel::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 10px;
+}
+.panel::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
+
+@media (max-width: 899px) {
+  .panel { position: static; max-height: none; }
+}
+
+
+/* =========================================================
+   🗂️ SECCIONES DEL PANEL
+   ========================================================= */
+.section {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.section:last-child { border-bottom: 0; }
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px 0;
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--dur-fast);
+}
+.section-title svg {
+  color: var(--gold);
+  filter: drop-shadow(0 0 4px var(--gold-glow));
+}
+.section:hover .section-title { color: var(--text-secondary); }
+
+.section-desc {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+
+.divider {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
+  margin: 0;
+}
+
+/* Secciones colapsables con <details> */
+details.section { padding: 0; }
+details.section > summary {
+  padding: 20px 24px;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+details.section > summary::-webkit-details-marker { display: none; }
+details.section > summary::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(-45deg);
+  transition: transform var(--dur-fast) var(--ease-smooth);
+}
+details.section[open] > summary::after { transform: rotate(45deg); }
+details.section[open] > summary { border-bottom: 1px solid var(--border-subtle); }
+details.section > .section-content { padding: 20px 24px; }
+
+
+/* =========================================================
+   📝 FORMULARIOS (Minimalismo de lujo)
+   ========================================================= */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  transition:
+    border-color var(--dur-fast) var(--ease-smooth),
+    box-shadow var(--dur-fast) var(--ease-smooth),
+    background var(--dur-fast) var(--ease-smooth);
+}
+.field:focus-within {
+  border-color: var(--gold);
+  background: var(--bg-hover);
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+.field.invalid { border-color: var(--danger); }
+.field.invalid:focus-within { box-shadow: 0 0 0 3px var(--danger-glow); }
+
+.field-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.field-label .value {
+  color: var(--gold-light);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Inputs de texto */
+.field input[type="text"],
+.field input[type="number"],
+.field input[type="email"],
+.field input[type="url"] {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 4px 0;
+  min-height: 24px;
+  font-variant-numeric: tabular-nums;
+}
+.field input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* Textarea */
+.field textarea {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.95em;
+  font-weight: 400;
+  padding: 4px 0;
+  min-height: 80px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Select custom */
+.field select {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 4px 24px 4px 0;
+  min-height: 24px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23D4AF37' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+.field select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 8px;
+}
+
+
+/* =========================================================
+   🎚️ RANGE SLIDER PREMIUM (Chrome + Firefox)
+   ========================================================= */
+.range-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.range-wrap output {
+  min-width: 42px;
+  text-align: right;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--gold-light);
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 24px;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Webkit track & thumb */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border-medium);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--bg-primary);
+  margin-top: -7px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: transform var(--dur-fast) var(--ease-smooth), box-shadow var(--dur-fast);
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px var(--gold-glow), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.1);
+  background: var(--gold-light);
+}
+
+/* Firefox track & thumb */
+input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border-medium);
+  border: 0;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--bg-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: transform var(--dur-fast) var(--ease-smooth);
+}
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px var(--gold-glow), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+input[type="range"]::-moz-range-progress {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--gold);
+}
+
+input[type="range"]:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+
+/* =========================================================
+   ☑️ CHECKBOX & RADIO CUSTOM
+   ========================================================= */
+.check-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  user-select: none;
+  transition: color var(--dur-fast);
+}
+.check:hover { color: var(--text-primary); }
+
+.check input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.check .box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--border-medium);
+  border-radius: 5px;
+  background: var(--bg-tertiary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--dur-fast) var(--ease-smooth);
+  flex-shrink: 0;
+}
+.check.radio .box { border-radius: 50%; }
+
+.check input:checked + .box {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+.check input:checked + .box::after {
+  content: '';
+  width: 5px;
+  height: 9px;
+  border-right: 2px solid var(--bg-primary);
+  border-bottom: 2px solid var(--bg-primary);
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.check.radio input:checked + .box::after {
+  width: 6px;
+  height: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  transform: none;
+}
+.check input:focus-visible + .box {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   📱 RESPONSIVE REFINEMENTS
+   ========================================================= */
+@media (max-width: 600px) {
+  .section { padding: 16px 18px; }
+  .field { padding: 12px 14px; }
+}

@@ -1,0 +1,908 @@
+/* =========================================================
+   Cuadro 3D Creator · Studio — style.css
+   Paleta: Dark Luxury con acentos dorados + Efectos 3D
+   ========================================================= */
+
+/* === VARIABLES DE COLORES + PROFUNDIDAD 3D === */
+:root {
+  /* 🎨 Paleta Principal */
+  --color-primary: #D4AF37;
+  --color-primary-light: #F2D06B;
+  --color-primary-dark: #AA8C2C;
+  --color-primary-glow: rgba(212, 175, 55, 0.3);
+
+  /* 🌑 Fondos oscuros */
+  --bg-main: #0A0A0F;
+  --bg-card: #15151E;
+  --bg-card-hover: #1E1E2A;
+  --bg-input: #1A1A25;
+
+  /* 🔤 Textos */
+  --text-primary: #FFFFFF;
+  --text-secondary: #B8B8C8;
+  --text-muted: #6B6B7B;
+
+  /* 🔲 Bordes */
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-active: var(--color-primary);
+
+  /* ⚠️ Estados */
+  --color-danger: #FF4757;
+  --color-success: #2ED573;
+  --color-warning: #FFA502;
+
+  /* 📐 Espaciado y formas */
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+
+  /* 🎭 PROFUNDIDAD 3D — Nuevas variables */
+  --depth-1: 0 1px 2px rgba(0,0,0,0.4);
+  --depth-2: 0 4px 12px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3);
+  --depth-3: 0 12px 32px rgba(0,0,0,0.6), 0 4px 8px rgba(0,0,0,0.4);
+  --depth-4: 0 24px 64px rgba(0,0,0,0.7), 0 8px 16px rgba(0,0,0,0.5);
+  --depth-inset: inset 0 2px 4px rgba(0,0,0,0.5), inset 0 -1px 0 rgba(255,255,255,0.03);
+  --depth-inset-soft: inset 0 1px 2px rgba(0,0,0,0.3);
+
+  /* 💡 Iluminación direccional (luz arriba-izquierda) */
+  --highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --highlight-strong: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  --shadow-edge: inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+
+  /* 🎬 Perspectiva 3D */
+  --perspective: 1200px;
+  --tilt-max: 6deg;
+}
+
+/* === RESET === */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212, 175, 55, 0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(212, 175, 55, 0.04), transparent),
+    linear-gradient(135deg, var(--bg-main) 0%, #0F0F18 100%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === TOPBAR con profundidad 3D === */
+.topbar {
+  background: rgba(21, 21, 30, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 8px 24px -8px rgba(0, 0, 0, 0.6);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-shadow: 0 0 20px var(--color-primary-glow);
+}
+
+.brand-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--color-primary);
+  filter: drop-shadow(0 2px 6px var(--color-primary-glow));
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.topbar:hover .brand-icon {
+  transform: rotateY(180deg) scale(1.1);
+}
+
+.tag {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  color: var(--bg-main);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 2px 8px var(--color-primary-glow);
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-color);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.1));
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow:
+    var(--highlight),
+    var(--shadow-edge),
+    var(--depth-1);
+}
+.icon-btn:hover {
+  background: linear-gradient(180deg, var(--bg-card-hover), var(--bg-card));
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow:
+    var(--highlight-strong),
+    var(--shadow-edge),
+    var(--depth-2),
+    0 0 16px var(--color-primary-glow);
+}
+.icon-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--depth-inset);
+}
+
+/* === LAYOUT con perspectiva 3D === */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  padding: 24px;
+  max-width: 1600px;
+  margin: 0 auto;
+  perspective: var(--perspective);
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+    perspective: none;
+  }
+}
+
+/* === STAGE / CANVAS — Efecto MARCO 3D === */
+.stage {
+  position: relative;
+  background:
+    linear-gradient(180deg, var(--bg-card-hover) 0%, var(--bg-card) 100%);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow:
+    var(--highlight),
+    var(--shadow-edge),
+    var(--depth-3),
+    0 0 0 1px rgba(0, 0, 0, 0.3);
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Marco dorado exterior (efecto cuadro físico) */
+.stage::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: calc(var(--radius-lg) + 2px);
+  padding: 2px;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-light) 0%,
+    var(--color-primary) 40%,
+    var(--color-primary-dark) 70%,
+    transparent 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0.4;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.stage:hover::before { opacity: 0.8; }
+
+/* Reflejo sutil superior */
+.stage::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  pointer-events: none;
+}
+
+.stage canvas {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  background: #000;
+  cursor: grab;
+  box-shadow:
+    inset 0 0 40px rgba(0, 0, 0, 0.6),
+    inset 0 2px 8px rgba(0, 0, 0, 0.8),
+    var(--depth-inset-soft);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: translateZ(0);
+}
+.stage:hover canvas {
+  transform: translateZ(20px) scale(1.005);
+}
+
+.stage canvas:active {
+  cursor: grabbing;
+  transform: translateZ(10px) scale(0.995);
+}
+
+.stage-hint {
+  text-align: center;
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.stage-hint kbd {
+  background: linear-gradient(180deg, var(--bg-card-hover), var(--bg-card));
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'SF Mono', Monaco, monospace;
+  color: var(--color-primary);
+  border: 1px solid var(--border-color);
+  box-shadow:
+    var(--highlight),
+    var(--shadow-edge),
+    var(--depth-1);
+  font-size: 11px;
+}
+
+/* === PANEL — Cristal con profundidad === */
+.panel {
+  background:
+    linear-gradient(180deg, rgba(30, 30, 42, 0.9) 0%, rgba(21, 21, 30, 0.95) 100%);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow:
+    var(--highlight),
+    var(--shadow-edge),
+    var(--depth-3);
+  height: fit-content;
+  position: sticky;
+  top: 90px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.panel:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    var(--highlight-strong),
+    var(--shadow-edge),
+    var(--depth-4);
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-primary);
+  margin-bottom: 16px;
+  text-shadow: 0 0 12px var(--color-primary-glow);
+}
+
+.section-title svg {
+  width: 16px;
+  height: 16px;
+  filter: drop-shadow(0 0 4px var(--color-primary-glow));
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--border-color) 20%,
+    var(--border-color) 80%,
+    transparent 100%
+  );
+  margin: 20px 0;
+  border: none;
+}
+
+/* === FORMULARIOS con efecto hundido 3D === */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+
+.field input[type="text"] {
+  background: linear-gradient(180deg, var(--bg-input), #16161F);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  color: var(--text-primary);
+  font-size: 14px;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow:
+    var(--depth-inset-soft),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.03);
+}
+.field input[type="text"]:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+}
+.field input[type="text"]:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow:
+    var(--depth-inset-soft),
+    0 0 0 3px var(--color-primary-glow),
+    inset 0 0 12px rgba(212, 175, 55, 0.05);
+}
+.field input[type="text"]::placeholder {
+  color: var(--text-muted);
+}
+
+.field-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* === RANGE SLIDER 3D === */
+input[type="range"] {
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(180deg, #0A0A0F, var(--bg-input));
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  box-shadow:
+    var(--depth-inset-soft),
+    inset 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid var(--bg-main);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    0 0 12px var(--color-primary-glow);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.2s ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    0 4px 16px rgba(0, 0, 0, 0.6),
+    0 0 20px var(--color-primary-glow);
+}
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.1);
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: linear-gradient(180deg, #0A0A0F, var(--bg-input));
+  border-radius: 3px;
+  border: 0;
+  box-shadow: var(--depth-inset-soft);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+  border-radius: 50%;
+  border: 2px solid var(--bg-main);
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    0 0 12px var(--color-primary-glow);
+}
+
+.zoom-out {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 13px;
+  text-shadow: 0 0 8px var(--color-primary-glow);
+}
+
+/* === BOTONES 3D (Bevel real) === */
+.btn {
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  margin-bottom: 10px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Botón Primario — Oro con bevel 3D */
+.btn.primary {
+  background: linear-gradient(180deg, var(--color-primary-light) 0%, var(--color-primary) 50%, var(--color-primary-dark) 100%);
+  color: var(--bg-main);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.25),
+    0 2px 0 var(--color-primary-dark),
+    0 4px 12px var(--color-primary-glow),
+    var(--depth-2);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.btn.primary:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(180deg, #F5D77A 0%, var(--color-primary-light) 50%, var(--color-primary) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.25),
+    0 4px 0 var(--color-primary-dark),
+    0 8px 24px var(--color-primary-glow),
+    var(--depth-3);
+}
+.btn.primary:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2),
+    0 1px 0 var(--color-primary-dark),
+    var(--depth-1);
+}
+
+/* Botón Alternativo — Hundido */
+.btn.alt {
+  background: linear-gradient(180deg, var(--bg-card-hover), var(--bg-card));
+  color: var(--text-primary);
+  border: 1px dashed var(--border-color);
+  box-shadow:
+    var(--highlight),
+    var(--shadow-edge),
+    var(--depth-1);
+}
+.btn.alt:hover {
+  border-color: var(--color-primary);
+  border-style: solid;
+  color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow:
+    var(--highlight-strong),
+    var(--shadow-edge),
+    var(--depth-2),
+    0 0 12px var(--color-primary-glow);
+}
+.btn.alt:active {
+  transform: translateY(0);
+  box-shadow: var(--depth-inset);
+}
+
+/* Botón Danger — Rojo con bevel */
+.btn.danger {
+  background: linear-gradient(180deg, rgba(255, 71, 87, 0.15), rgba(255, 71, 87, 0.05));
+  color: var(--color-danger);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 71, 87, 0.1),
+    var(--depth-1);
+}
+.btn.danger:hover {
+  background: linear-gradient(180deg, var(--color-danger), #D63031);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    0 4px 16px rgba(255, 71, 87, 0.4),
+    var(--depth-2);
+}
+.btn.danger:active {
+  transform: translateY(1px);
+  box-shadow: var(--depth-inset);
+}
+
+/* === CHIPS 3D === */
+.chip {
+  padding: 8px 16px;
+  background: linear-gradient(180deg, var(--bg-card-hover), var(--bg-card));
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow:
+    var(--highlight),
+    var(--shadow-edge),
+    var(--depth-1);
+}
+.chip:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow:
+    var(--highlight-strong),
+    var(--shadow-edge),
+    var(--depth-2);
+}
+.chip:active {
+  transform: translateY(0);
+  box-shadow: var(--depth-inset);
+}
+
+.chip.on {
+  background: linear-gradient(180deg, var(--color-primary-light), var(--color-primary));
+  color: var(--bg-main);
+  border-color: var(--color-primary-dark);
+  font-weight: 600;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    0 2px 0 var(--color-primary-dark),
+    0 4px 12px var(--color-primary-glow);
+}
+
+.chip.danger:hover {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+  box-shadow:
+    var(--highlight),
+    var(--shadow-edge),
+    var(--depth-2),
+    0 0 12px rgba(255, 71, 87, 0.3);
+}
+
+/* === PALETA DE COLORES 3D === */
+#colors {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.color-swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow:
+    inset 0 -4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.15),
+    var(--depth-1);
+  transform-style: preserve-3d;
+}
+.color-swatch:hover {
+  transform: translateY(-3px) scale(1.1) rotateX(10deg);
+  box-shadow:
+    inset 0 -4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    var(--depth-3);
+}
+.color-swatch.active {
+  border-color: var(--color-primary);
+  box-shadow:
+    inset 0 -4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    0 0 0 3px var(--bg-card),
+    0 0 0 5px var(--color-primary),
+    0 0 20px var(--color-primary-glow);
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* === DROP ZONE 3D === */
+.drop-zone {
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius);
+  padding: 32px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.05));
+  box-shadow: var(--depth-inset-soft);
+}
+.drop-zone:hover,
+.drop-zone.is-dragging {
+  border-color: var(--color-primary);
+  background:
+    linear-gradient(180deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02));
+  box-shadow:
+    var(--depth-inset-soft),
+    0 0 24px var(--color-primary-glow);
+  transform: scale(1.01);
+}
+
+.drop-zone svg {
+  width: 40px;
+  height: 40px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s ease;
+}
+.drop-zone:hover svg,
+.drop-zone.is-dragging svg {
+  color: var(--color-primary);
+  filter: drop-shadow(0 0 12px var(--color-primary-glow));
+  transform: translateY(-4px);
+}
+
+.link-text {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-shadow: 0 0 8px var(--color-primary-glow);
+}
+
+/* === MODALES con profundidad === */
+dialog {
+  border: none;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--bg-card-hover), var(--bg-card));
+  color: var(--text-primary);
+  box-shadow:
+    var(--highlight),
+    var(--shadow-edge),
+    var(--depth-4),
+    0 0 0 1px rgba(0, 0, 0, 0.3);
+  max-width: 480px;
+  width: 90%;
+  opacity: 0;
+  transform: scale(0.95) translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+dialog[open] {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--highlight);
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.modal-body {
+  padding: 24px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-edge);
+}
+
+.modal-footer .btn {
+  width: auto;
+  margin: 0;
+  min-width: 120px;
+}
+
+/* === TOASTS con elevación 3D === */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  background: linear-gradient(180deg, var(--bg-card-hover), var(--bg-card));
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  box-shadow:
+    var(--highlight),
+    var(--shadow-edge),
+    var(--depth-3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: toastIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: auto;
+  transform-origin: bottom center;
+}
+.toast.error {
+  border-left-color: var(--color-danger);
+  box-shadow:
+    var(--highlight),
+    var(--shadow-edge),
+    var(--depth-3),
+    0 0 16px rgba(255, 71, 87, 0.2);
+}
+.toast.success {
+  border-left-color: var(--color-success);
+  box-shadow:
+    var(--highlight),
+    var(--shadow-edge),
+    var(--depth-3),
+    0 0 16px rgba(46, 213, 115, 0.2);
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9) rotateX(-15deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0);
+  }
+}
+
+/* === FOOTER === */
+.panel-footer {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .layout {
+    padding: 16px;
+    gap: 16px;
+  }
+  .panel {
+    position: static;
+  }
+  .topbar {
+    padding: 12px 16px;
+  }
+  .brand {
+    font-size: 16px;
+  }
+  .stage canvas:hover {
+    transform: none;
+  }
+}
+
+/* === SCROLLBAR 3D === */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--bg-card-hover), var(--bg-card));
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--color-primary-light), var(--color-primary));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 8px var(--color-primary-glow);
+}
+
+/* === SELECCIÓN DE TEXTO === */
+::selection {
+  background: var(--color-primary);
+  color: var(--bg-main);
+}
+
+/* === ACCESIBILIDAD === */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
