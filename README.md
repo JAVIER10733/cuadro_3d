@@ -1,4 +1,4 @@
-```markdown
+
 # 🖼️ Cuadro 3D Creator · Studio
 
 > **Aplicación web de alto rendimiento** para el diseño de cuadros personalizados con estética neón 3D. Compone nombres, fotografías, logotipos, frases y códigos de Spotify en un lienzo de alta resolución (1485×1050 px), renderizado en tiempo real mediante Canvas 2D y exportable a formatos profesionales sin dependencias externas.
